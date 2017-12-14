@@ -2,15 +2,15 @@
 // Created by wein on 12/15/17.
 //
 
-#include <tinyunit.h>
+#include <tinyCUnit.h>
 
 
-TinyCase ExpectEqual() {
+void ExpectEqual() {
     ASSERT_EQ(1, 1);
 }
 
 
-TinyCase ExpectNotEqual() {
+void ExpectNotEqual() {
     ASSERT_NE(1, 2);
 }
 

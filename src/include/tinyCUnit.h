@@ -8,6 +8,10 @@
 #include <assert.h>
 #include <stdio.h>
 
+#ifndef MAXCASES
+#define MAXCASES 255
+#endif
+
 
 struct TinyCase_T {
     const char *name;
@@ -18,12 +22,12 @@ struct TinyCase_T {
 struct TinyCase_T *INVALID = 0;
 
 
-struct TinyCase_T tinyCases[255];
+struct TinyCase_T tinyCases[MAXCASES];
 
 
 struct TinyCase_T *nextTinyCase() {
     struct TinyCase_T *pTC = tinyCases;
-    for (int i = 0; i < 255; ++i, ++pTC) {
+    for (int i = 0; i < MAXCASES; ++i, ++pTC) {
         if (!pTC->pFunc) {
             return pTC;
         }
@@ -44,7 +48,7 @@ void addTinyCase(const char *name, void (*pFunc)()) {
 int RUN_ALL_TESTS() {
     struct TinyCase_T *pTC = tinyCases;
     int i = 0;
-    for (; i < 255; ++i, ++pTC) {
+    for (; i < MAXCASES; ++i, ++pTC) {
         if (!pTC->pFunc) {
             break;
         }
@@ -56,7 +60,6 @@ int RUN_ALL_TESTS() {
 }
 
 
-#define TinyCase void
 #define AddTinyCase(x) addTinyCase(#x, &x)
 
 #define ASSERT_EQ(x, y) assert(x == y)
