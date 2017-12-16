@@ -1,5 +1,5 @@
 
-add_library(tinyunit INTERFACE)
-target_include_directories(tinyunit
+add_library(tinyCUnit INTERFACE)
+target_include_directories(tinyCUnit
     INTERFACE
     include)

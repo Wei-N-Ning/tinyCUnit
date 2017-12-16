@@ -5,18 +5,18 @@
 #include <tinyCUnit.h>
 
 
-void ExpectEqual() {
+TINYTEST ExpectEqual() {
     ASSERT_EQ(1, 1);
 }
 
 
-void ExpectNotEqual() {
+TINYTEST ExpectNotEqual() {
     ASSERT_NE(1, 2);
 }
 
 
 int main(int argc, char **argv) {
-    AddTinyCase(ExpectEqual);
-    AddTinyCase(ExpectNotEqual);
+    AddTinyTest(ExpectEqual);
+    AddTinyTest(ExpectNotEqual);
     return RUN_ALL_TESTS();
 }

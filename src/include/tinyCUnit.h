@@ -2,65 +2,65 @@
 // Created by wein on 12/15/17.
 //
 
-#ifndef TINYUNIT_TINYUNIT_H
-#define TINYUNIT_TINYUNIT_H
+#ifndef TINYCUNIT_H
+#define TINYCUNIT_H
 
 #include <assert.h>
 #include <stdio.h>
 
-#ifndef MAXCASES
-#define MAXCASES 255
+#ifndef MAXTESTNUM
+#define MAXTESTNUM 255
 #endif
 
 
-struct TinyCase_T {
+struct TinyTest_T {
     const char *name;
     void (*pFunc)();
 };
 
 
-struct TinyCase_T *INVALID = 0;
+static struct TinyTest_T *INVALID = 0;
+static struct TinyTest_T tinyTests[MAXTESTNUM];
 
 
-struct TinyCase_T tinyCases[MAXCASES];
-
-
-struct TinyCase_T *nextTinyCase() {
-    struct TinyCase_T *pTC = tinyCases;
-    for (int i = 0; i < MAXCASES; ++i, ++pTC) {
-        if (!pTC->pFunc) {
-            return pTC;
+struct TinyTest_T *nextTinyCase() {
+    struct TinyTest_T *pTT = tinyTests;
+    for (int i = 0; i < MAXTESTNUM; ++i, ++pTT) {
+        if (!pTT->pFunc) {
+            return pTT;
         }
     }
     return INVALID;
 }
 
 
-void addTinyCase(const char *name, void (*pFunc)()) {
-    struct TinyCase_T *pTC = nextTinyCase();
-    if (pTC) {
-        pTC->name = name;
-        pTC->pFunc = pFunc;
+void addTinyTest(const char *name, void (*pFunc)()) {
+    struct TinyTest_T *pTT = nextTinyCase();
+    if (pTT) {
+        pTT->name = name;
+        pTT->pFunc = pFunc;
     }
 }
 
 
 int RUN_ALL_TESTS() {
-    struct TinyCase_T *pTC = tinyCases;
+    struct TinyTest_T *pTT = tinyTests;
     int i = 0;
-    for (; i < MAXCASES; ++i, ++pTC) {
-        if (!pTC->pFunc) {
+    for (; i < MAXTESTNUM; ++i, ++pTT) {
+        if (!pTT->pFunc) {
             break;
         }
-        printf("---- test case: %s ----\n", pTC->name);
-        pTC->pFunc();
+        printf("---- test case: %s ----\n", pTT->name);
+        pTT->pFunc();
     }
     printf("Run %d tests\n", i);
     return 0;
 }
 
 
-#define AddTinyCase(x) addTinyCase(#x, &x)
+#define AddTinyTest(x) addTinyTest(#x, &x)
+
+#define TINYTEST void
 
 #define ASSERT_EQ(x, y) assert(x == y)
 #define ASSERT_NE(x, y) assert(x != y)
@@ -68,4 +68,4 @@ int RUN_ALL_TESTS() {
 #define ASSERT_FALSE(x) assert(!x)
 
 
-#endif //TINYUNIT_TINYUNIT_H
+#endif //TINYCUNIT_H
