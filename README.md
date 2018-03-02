@@ -1,6 +1,10 @@
 A Tiny C Unit Test Helper
 -------------------------
 
+To bring xUnit in C with minimal set up overhead.
+
+Tested on Ubuntu 16.
+
 ### Usage
 
 Copy [tinyCUnit.h](tinyCUnit.h) to somewhere your tests can #include from.
@@ -43,6 +47,8 @@ int main() {
 
 ```
 
+See [test_tinyCUnit.c](test_tinyCUnit.c) for a complete example.
+
 Once built and executed, the test runner prints a summary in the shell:
 
 ```
@@ -53,14 +59,29 @@ Summary: 2 tests, 0.000115s (115.000000ms)
 ```
 
 It is highly recommended to take a look at Clean Code: A Handbook of Agile Software Craftsmanship, 
-by Uncle Bob.
+ written by Uncle Bob to get a good understanding of TDD methodology.
 
 ### How does it work
 
 Tiny C Unit uses the "anonymous function" (lambda) technique.
 
 It creates a function pointer array (and a c-string array to hold the function names) in order to 
-keep track of all the test functions. 
+keep track of all the test functions (anonymous functions). 
 
-RunTinyTests(), the test runner will iterate over these function pointers and call them one by one.
+The size of both arrays determines the total number of tests you can create per test executable.
 
+The default value is 1024. You may override this value via a compiler flag:
+
+```
+-DMAXNUMTESTFUNCS=2048
+```
+
+This means you can create up to 2048 tests in one executable...... something I would not recommend :)
+
+RunTinyTests(), the test runner, will iterate over these function pointers and call them one by one. 
+
+For convenience the test runner also measures the execution time (although the result is not 
+ perfectly accurate). I'm hoping to improve that in the future.
+
+SetUp() and TearDown() are not supported at the moment, but it is possible to implement them using 
+the same function pointer technique.
