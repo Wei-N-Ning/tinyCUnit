@@ -1,13 +1,13 @@
 A Tiny C Unit Test Helper
 -------------------------
 
-###Usage
+### Usage
 
-Copy (tinyCUnit.h)[tinyCUnit.h] to somewhere your tests can #include from.
+Copy [tinyCUnit.h](tinyCUnit.h) to somewhere your tests can #include from.
 
 In your test:
 
-```
+```C
 #include tinyCUnit.h
 
 // ... include your SUTs; Define other test helper functions
@@ -55,7 +55,7 @@ Summary: 2 tests, 0.000115s (115.000000ms)
 It is highly recommended to take a look at Clean Code: A Handbook of Agile Software Craftsmanship, 
 by Uncle Bob.
 
-###How does it work
+### How does it work
 
 Tiny C Unit uses the "anonymous function" (lambda) technique.
 
