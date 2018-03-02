@@ -8,7 +8,7 @@ Copy [tinyCUnit.h](tinyCUnit.h) to somewhere your tests can #include from.
 In your test:
 
 ```C
-#include tinyCUnit.h
+#include "tinyCUnit.h"
 
 // ... include your SUTs; Define other test helper functions
 
