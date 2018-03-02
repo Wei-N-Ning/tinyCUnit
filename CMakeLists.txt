@@ -1,8 +1,7 @@
 cmake_minimum_required(VERSION 3.0)
+project(tinyCUnit)
 
-project(tinyCUnit C)
-
-enable_testing()
-
-add_subdirectory(src)
-add_subdirectory(tests)
+add_executable(testTinyCUnit test_tinyCUnit.c)
+set_target_properties(testTinyCUnit
+    PROPERTIES
+    C_STANDARD 99)
