@@ -1,7 +1,3 @@
-//
-// Created by wein on 3/2/18.
-//
-
 #ifndef TINYCUNIT_H
 #define TINYCUNIT_H
 
