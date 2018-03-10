@@ -85,3 +85,11 @@ For convenience the test runner also measures the execution time (although the r
 
 SetUp() and TearDown() are not supported at the moment, but it is possible to implement them using 
 the same function pointer technique.
+
+
+### Limitations
+
+Debugger can not step into the anonymous function.
+
+If you need debug-ability, use the cmake module: tinyCUnit.cmake
+
