@@ -16,6 +16,9 @@ add_tinytest_executable(test_nomain_abs
     ${CMAKE_SOURCE_DIR}/test_nomain.c)
 add_tinytest_executable(test_nomain_cxx
     test_nomaincxx.cpp)
+set_target_properties(test_nomain_cxx
+    PROPERTIES
+    CXX_STANDARD 11)
 
 add_test(NAME TinyTest::UseHeader COMMAND testTinyCUnit)
 add_test(NAME TinyTest::UseGeneratorRelPath COMMAND test_nomain)
