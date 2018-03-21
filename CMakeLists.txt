@@ -23,3 +23,4 @@ set_target_properties(test_nomain_cxx
 add_test(NAME TinyTest::UseHeader COMMAND testTinyCUnit)
 add_test(NAME TinyTest::UseGeneratorRelPath COMMAND test_nomain)
 add_test(NAME TinyTest::UseGeneratorAbsPath COMMAND test_nomain_abs)
+add_test(NAME TinyTest::UseCXX COMMAND test_nomain_cxx)
