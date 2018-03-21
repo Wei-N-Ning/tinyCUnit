@@ -149,6 +149,8 @@ class Formatter(object):
         self._num_char_indent = 4
 
     def prt(self, source_object):
+        if isinstance(source_object, basestring):
+            return source_object
         if isinstance(source_object, TinyTestFunc):
             return self.prtTinyTestFunc(source_object)
         if isinstance(source_object, VoidCFuncBegin):
@@ -205,6 +207,14 @@ class Formatter(object):
         print >>ss, '{}printf("Done\\n");'.format(self.indent())
         return ss.getvalue()
 
+    def prtTinyTestDecl(self, source_object):
+        ss = StringIO.StringIO()
+        print >>ss, 'extern void {}();\n'.format(source_object.func_name)
+        return ss.getvalue()
+
+    def prtStatement(self, s):
+        return '{}printf("{}\\n");'.format(self.indent(), s)
+
 
 def raise_if_path_not_exist(path):
     if not os.path.isfile(path):
@@ -223,18 +233,22 @@ def main():
     from_path, to_path = (sys.argv[1:] + ['___', '___'])[0: 2]
     raise_if_path_not_exist(from_path)
     raise_if_dir_not_writable(to_path)
+    formatter = Formatter()
     source_objects = list()
+    isCXX = False
+    if from_path.endswith('.cc') or from_path.endswith('.cxx') or from_path.endswith('.cpp'):
+        isCXX = True
     with open(from_path, 'r') as fp:
         source_objects = Parser().parse(Stream(fp)).source_objects()
-    exported = [CInclude('stdio.h'),
-                CInclude('stdlib.h'),
-                CInclude('time.h'),
+    exported = [CInclude('cstdio' if isCXX else 'stdio.h'),
+                CInclude('cstdlib' if isCXX else 'stdlib.h'),
+                CInclude('ctime' if isCXX else 'time.h'),
+                ''.join([formatter.prtTinyTestDecl(so) for so in source_objects]),
                 VoidCFuncBegin('void RunTinyTests()'),
                 CTimerBegin()]
     exported.extend(source_objects)
-    exported.extend([CTimerEnd(),
-                     VoidCFuncEnd()])
-    formatter = Formatter()
+    exported.append(formatter.prtStatement('\\n{} tests'.format(len(source_objects))))
+    exported.extend([CTimerEnd(), VoidCFuncEnd()])
     with open(to_path, 'w') as fp:
         for so in exported:
             fp.write(formatter.prt(so))
