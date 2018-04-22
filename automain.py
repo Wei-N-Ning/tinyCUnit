@@ -1,7 +1,10 @@
 
 import os
 import re
-import StringIO
+try:
+    import io as StringIO
+except ImportError, e:  # python 2.7 compatibility
+    import StringIO
 import sys
 
 
