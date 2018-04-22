@@ -3,7 +3,7 @@ import os
 import re
 try:
     import io as StringIO
-except ImportError, e:  # python 2.7 compatibility
+except ImportError:  # python 2.7 compatibility
     import StringIO
 import sys
 
