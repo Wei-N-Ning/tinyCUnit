@@ -1,11 +1,11 @@
 
 import os
 import re
-try:
-    import io as StringIO
-except ImportError:  # python 2.7 compatibility
-    import StringIO
 import sys
+if sys.version_info[0] >= 3:
+    import io as StringIO
+else:  # python 2.7 compatibility
+    import StringIO
 
 
 class Stream(object):
